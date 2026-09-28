@@ -2062,13 +2062,13 @@ const AUDIO_BASE = "audio/eb-y2p1/";
 const AUDIO_STATE = {};
 function audioSlot(key, label){
   return `<div class="audio" data-akey="${key}"><span class="audio-l">${icon("i-listen")}<span><b>${esc(label)}</b><small>Press play to listen</small></span></span>
-    <audio controls preload="metadata"><source src="${AUDIO_BASE}${key}-v1.mp3" type="audio/mpeg"><source src="${AUDIO_BASE}${key}-v1.m4a" type="audio/mp4"></audio></div>`;
+    <audio controls preload="metadata"><source src="${AUDIO_BASE}${key}-v1.m4a" type="audio/mp4"><source src="${AUDIO_BASE}${key}-v1.mp3" type="audio/mpeg"></audio></div>`;
 }
 function markAudio(key, ok){ AUDIO_STATE[key] = ok ? "yes" : "no"; }
 async function checkAudio(key){
   if (AUDIO_STATE[key] !== undefined || !location.protocol.startsWith("http")) return;
   AUDIO_STATE[key] = "checking";
-  for (const ext of ["mp3", "m4a"]) {
+  for (const ext of ["m4a", "mp3"]) {
     try { const r = await fetch(`${AUDIO_BASE}${key}-v1.${ext}`, {method: "HEAD", cache: "no-store"}); if (r.ok) { markAudio(key, true); return; } } catch(e) {}
   }
   markAudio(key, false);
